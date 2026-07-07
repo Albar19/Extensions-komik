@@ -37,7 +37,7 @@ def parse_build_gradle(ext_dir: Path) -> dict | None:
     vc_m = re.search(r"versionCode\s*=\s*(\d+)", text)
     cw_m = re.search(r"contentWarning\s*=\s*ContentWarning\.(\w+)", text)
     lang_m = re.search(r'lang\s*=\s*"([^"]+)"', text)
-    base_m = re.search(r'baseUrl\s*=\s*"([^"]+)"', text)
+    base_m = re.search(r'baseUrl\s*[=(]\s*"([^"]+)"', text)
     id_m = re.search(r"id\s*=\s*(\d+)L", text)
     lib_m = re.search(r'libVersion\s*=\s*"([^"]+)"', text)
 
