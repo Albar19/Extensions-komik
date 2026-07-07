@@ -17,14 +17,7 @@ Ekstensi tersedia untuk [Mihon](https://github.com/mihonapp/mihon),
    https://raw.githubusercontent.com/Albar19/Extensions-komik/repo/index.min.json
    ```
 
-### Build APK Manual
 
-1. Clone repo ini, lalu:
-   ```
-   ./gradlew :src:id:mikoroku:assembleDebug
-   ```
-2. APK hasil: `src/id/mikoroku/build/outputs/apk/debug/`
-3. Install file `.apk` langsung di HP
 
 ## License
 
