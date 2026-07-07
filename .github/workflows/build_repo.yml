@@ -34,7 +34,9 @@ jobs:
             -alias repo -keyalg RSA -keysize 2048 -validity 10000 \
             -storepass reposign -keypass reposign \
             -dname "CN=Albar19, OU=Extensions, O=Albar19, L=Jakarta, ST=Jakarta, C=ID"
-          SIGNING_FINGERPRINT=$(keytool -list -v -keystore signingkey.jks -storepass reposign | grep "SHA256:" | head -1 | cut -d" " -f4 | tr -d '[:space:]')
+          keytool -exportcert -keystore signingkey.jks \
+            -alias repo -storepass reposign -file repo.crt 2>/dev/null
+          SIGNING_FINGERPRINT=$(openssl x509 -in repo.crt -noout -fingerprint -sha256 2>/dev/null | sed 's/.*=//' | tr -d ':')
           echo "SIGNING_FINGERPRINT=$SIGNING_FINGERPRINT" >> $GITHUB_ENV
 
       - name: Build extensions
