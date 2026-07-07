@@ -1,5 +1,6 @@
 import json
 import hashlib
+import os
 import re
 import shutil
 from pathlib import Path
@@ -61,11 +62,13 @@ def parse_build_gradle(ext_dir: Path) -> dict | None:
 
 
 def find_apk(ext_dir: Path) -> Path | None:
-    debug_dir = ext_dir / "build" / "outputs" / "apk" / "debug"
-    if not debug_dir.exists():
-        return None
-    apks = list(debug_dir.glob("*.apk"))
-    return apks[0] if apks else None
+    for variant in ("release", "debug"):
+        apk_dir = ext_dir / "build" / "outputs" / "apk" / variant
+        if apk_dir.exists():
+            apks = list(apk_dir.glob("*.apk"))
+            if apks:
+                return apks[0]
+    return None
 
 
 def main():
@@ -127,11 +130,13 @@ def main():
         json.dump(extensions, f, ensure_ascii=False, separators=(",", ":"))
 
     # Write repo.json
+    signing_fingerprint = os.environ.get("SIGNING_FINGERPRINT", "")
     repo_json = {
         "meta": {
             "name": "Albar19",
             "shortName": "Albar19",
             "website": "https://github.com/Albar19/Extensions-komik",
+            "signingKeyFingerprint": signing_fingerprint,
         }
     }
     with open(REPO_DIR / "repo.json", "w", encoding="utf-8") as f:

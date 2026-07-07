@@ -28,38 +28,53 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
+      - name: Generate signing key
+        run: |
+          keytool -genkey -v -keystore signingkey.jks \
+            -alias repo -keyalg RSA -keysize 2048 -validity 10000 \
+            -storepass reposign -keypass reposign \
+            -dname "CN=Albar19, OU=Extensions, O=Albar19, L=Jakarta, ST=Jakarta, C=ID"
+          SIGNING_FINGERPRINT=$(keytool -list -v -keystore signingkey.jks -storepass reposign | grep "SHA256:" | head -1 | cut -d" " -f4 | tr -d '[:space:]')
+          echo "SIGNING_FINGERPRINT=$SIGNING_FINGERPRINT" >> $GITHUB_ENV
+
       - name: Build extensions
+        env:
+          ALIAS: repo
+          KEY_STORE_PASSWORD: reposign
+          KEY_PASSWORD: reposign
         run: |
           ./gradlew \
-            :src:id:bacakomik:assembleDebug \
-            :src:id:doujindesu:assembleDebug \
-            :src:id:hentaicrot:assembleDebug \
-            :src:id:hwago:assembleDebug \
-            :src:id:kiryuu:assembleDebug \
-            :src:id:klikmanga:assembleDebug \
-            :src:id:komikav:assembleDebug \
-            :src:id:komikcast:assembleDebug \
-            :src:id:komikdewasa:assembleDebug \
-            :src:id:komikindoco:assembleDebug \
-            :src:id:komikindoid:assembleDebug \
-            :src:id:komikindo:assembleDebug \
-            :src:id:komiknesia:assembleDebug \
-            :src:id:komikstation:assembleDebug \
-            :src:id:komiktap:assembleDebug \
-            :src:id:komiku:assembleDebug \
-            :src:id:komikzoid:assembleDebug \
-            :src:id:kumapoi:assembleDebug \
-            :src:id:mangacan:assembleDebug \
-            :src:id:mangasusu:assembleDebug \
-            :src:id:mangatale:assembleDebug \
-            :src:id:mikoroku:assembleDebug \
-            :src:id:shinigami:assembleDebug \
-            :src:id:tooncubus:assembleDebug \
-            :src:id:westmanga:assembleDebug \
+            :src:id:bacakomik:assembleRelease \
+            :src:id:doujindesu:assembleRelease \
+            :src:id:hentaicrot:assembleRelease \
+            :src:id:hwago:assembleRelease \
+            :src:id:kiryuu:assembleRelease \
+            :src:id:klikmanga:assembleRelease \
+            :src:id:komikav:assembleRelease \
+            :src:id:komikcast:assembleRelease \
+            :src:id:komikdewasa:assembleRelease \
+            :src:id:komikindoco:assembleRelease \
+            :src:id:komikindoid:assembleRelease \
+            :src:id:komikindo:assembleRelease \
+            :src:id:komiknesia:assembleRelease \
+            :src:id:komikstation:assembleRelease \
+            :src:id:komiktap:assembleRelease \
+            :src:id:komiku:assembleRelease \
+            :src:id:komikzoid:assembleRelease \
+            :src:id:kumapoi:assembleRelease \
+            :src:id:mangacan:assembleRelease \
+            :src:id:mangasusu:assembleRelease \
+            :src:id:mangatale:assembleRelease \
+            :src:id:mikoroku:assembleRelease \
+            :src:id:shinigami:assembleRelease \
+            :src:id:tooncubus:assembleRelease \
+            :src:id:westmanga:assembleRelease \
             --parallel
 
       - name: Generate repo index
         run: python .github/scripts/generate-repo.py
+        env:
+          SIGNING_FINGERPRINT: ${{ env.SIGNING_FINGERPRINT }}
 
       - name: Deploy to repo branch
         uses: peaceiris/actions-gh-pages@v4
