@@ -37,6 +37,9 @@ jobs:
           cat > repo/index.min.json << 'EOF'
           [{"name":"MikoRoku","pkg":"eu.kanade.tachiyomi.extension.id.mikoroku","apk":"MikoRoku.apk","lang":"id","code":7,"version":"1.4.07","nsfw":3,"sources":[{"name":"MikoRoku","lang":"id","id":"8593493873810750465","baseUrl":"https://mikoroku.com"}]}]
           EOF
+          cat > repo/repo.json << 'EOF'
+          {"meta":{"name":"Albar19","shortName":"Albar19","website":"https://github.com/Albar19/Extensions-komik"}}
+          EOF
 
       - name: Deploy to repo branch
         uses: peaceiris/actions-gh-pages@v4
