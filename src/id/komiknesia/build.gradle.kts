@@ -10,6 +10,6 @@ keiyoushi {
 
     source {
         lang = "id"
-        baseUrl = "https://02.komiknesia.asia"
+        baseUrl = "https://id.komiknesia.net"
     }
 }

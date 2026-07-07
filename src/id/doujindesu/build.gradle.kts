@@ -10,7 +10,7 @@ keiyoushi {
 
     source {
         lang = "id"
-        baseUrl("https://doujin.desu.xxx") {
+        baseUrl("https://doujindesu.id") {
             withCustom = true
         }
         id = 7704282043609669342L

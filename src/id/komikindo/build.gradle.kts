@@ -11,6 +11,6 @@ keiyoushi {
 
     source {
         lang = "id"
-        baseUrl = "https://komikindo.bid"
+        baseUrl = "https://komikindo.fit"
     }
 }
