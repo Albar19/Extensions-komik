@@ -143,31 +143,45 @@ abstract class MikoRoku : ZeistManga() {
 
         val normalizedTitle = mangaTitle.lowercase().replace(Regex("\\s+"), "")
 
-        val chapterUrl = "$CHAPTER_HOST/feeds/posts/default?alt=json&max-results=200"
-        val chapterResponse = client.newCall(GET(chapterUrl, headers)).execute()
-        val jsonString = chapterResponse.body.string()
-        val feed = json.decodeFromString<ZeistMangaDto>(jsonString)
+        val allChapters = mutableListOf<SChapter>()
+        var startIndex = 1
+        val maxResults = 500
 
-        return feed.feed?.entry.orEmpty()
-            .filter { entry ->
-                val entryTitle = entry.title?.t ?: return@filter false
-                val normalizedEntry = entryTitle.lowercase().replace(Regex("\\s+"), "")
-                normalizedEntry.contains(normalizedTitle)
-            }
-            .map { entry ->
-                val chNumber = entry.title?.t?.let { title ->
-                    CHAPTER_REGEX.find(title)?.groupValues?.get(1)
+        while (true) {
+            val chapterUrl = "$CHAPTER_HOST/feeds/posts/default?alt=json&max-results=$maxResults&start-index=$startIndex"
+            val chapterResponse = client.newCall(GET(chapterUrl, headers)).execute()
+            val jsonString = chapterResponse.body.string()
+            val feed = json.decodeFromString<ZeistMangaDto>(jsonString)
+            val entries = feed.feed?.entry.orEmpty()
+
+            if (entries.isEmpty()) break
+
+            val matched = entries
+                .filter { entry ->
+                    val entryTitle = entry.title?.t ?: return@filter false
+                    val normalizedEntry = entryTitle.lowercase().replace(Regex("\\s+"), "")
+                    normalizedEntry.contains(normalizedTitle)
                 }
-                SChapter.create().apply {
-                    name = chNumber?.let { "Chapter $it" } ?: (entry.title?.t ?: "")
-                    url = entry.url?.firstOrNull { it.rel == "alternate" }?.href ?: ""
-                    date_upload = parseDate(entry.published?.t?.trim().orEmpty())
+                .map { entry ->
+                    val chNumber = entry.title?.t?.let { title ->
+                        CHAPTER_REGEX.find(title)?.groupValues?.get(1)
+                    }
+                    SChapter.create().apply {
+                        name = chNumber?.let { "Chapter $it" } ?: (entry.title?.t ?: "")
+                        url = entry.url?.firstOrNull { it.rel == "alternate" }?.href ?: ""
+                        date_upload = parseDate(entry.published?.t?.trim().orEmpty())
+                    }
                 }
-            }
-            .sortedByDescending { chapter ->
-                val num = CHAPTER_REGEX.find(chapter.name)?.groupValues?.get(1)
-                num?.toFloatOrNull() ?: 0f
-            }
+            allChapters.addAll(matched)
+
+            if (entries.size < maxResults) break
+            startIndex += maxResults
+        }
+
+        return allChapters.sortedByDescending { chapter ->
+            val num = CHAPTER_REGEX.find(chapter.name)?.groupValues?.get(1)
+            num?.toFloatOrNull() ?: 0f
+        }
     }
 
     override fun pageListRequest(chapter: SChapter): Request = GET(chapter.url, headers)
@@ -186,8 +200,12 @@ abstract class MikoRoku : ZeistManga() {
         }
 
         return images.mapIndexed { index, img ->
-            Page(index, imageUrl = img.attr("abs:src"))
+            Page(index, imageUrl = cleanImageUrl(img.attr("abs:src")))
         }
+    }
+
+    private fun cleanImageUrl(url: String): String {
+        return url.replace(Regex("""/s\d+(-[a-z0-9]+)?"""), "/s0")
     }
 
     companion object {
