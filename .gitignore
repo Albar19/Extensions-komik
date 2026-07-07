@@ -12,3 +12,4 @@ gen
 generated-src/
 .kotlin
 *.jks
+hs_err_pid*.log
