@@ -1,25 +1,22 @@
 # Extensions Komik
 
-Repository ini berisi perbaikan untuk ekstensi sumber manga/scrap bahasa Indonesia yang dibuat oleh
-[Keiyoushi](https://github.com/keiyoushi/extensions-source) dan
+Perbaikan untuk ekstensi sumber manga/scrap bahasa Indonesia.
+Berdasarkan kode dari [Keiyoushi](https://github.com/keiyoushi/extensions-source) dan
 [Yūzōnō](https://github.com/yuzono/tachiyomi-extensions).
 
-Ekstensi tersedia untuk [Mihon](https://github.com/mihonapp/mihon),
+Kompatibel dengan [Mihon](https://github.com/mihonapp/mihon),
 [Tachiyomi](https://github.com/tachiyomiorg/tachiyomi), dan fork lainnya.
 
 ## Cara Pakai
 
-### Pasang via Repo URL (Mihon)
-
 1. Buka Mihon → **Browse** → **Extension repos**
-2. Tap **+** lalu masukin URL:
+2. Tap **+** lalu masukkan URL:
    ```
    https://raw.githubusercontent.com/Albar19/Extensions-komik/repo/index.min.json
    ```
-   
-   > **Catatan:** Setiap push, GitHub Actions bakal build otomatis. Tunggu sampai workflow selesai (cek di tab Actions) sebelum repo URL bisa dipake.
+3. Tunggu sampai repo terunduh, lalu cari extension di daftar
 
-
+> Setiap push ke repo ini, GitHub Actions otomatis build & deploy. Pastikan workflow di tab Actions selesai sebelum repo URL bisa dipakai.
 
 ## License
 
