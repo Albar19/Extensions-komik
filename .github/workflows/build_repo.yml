@@ -35,7 +35,7 @@ jobs:
           mkdir -p repo/apk
           cp src/id/mikoroku/build/outputs/apk/debug/*.apk repo/apk/MikoRoku.apk
           cat > repo/index.min.json << 'EOF'
-          {"extensions":[{"name":"MikoRoku","packageName":"eu.kanade.tachiyomi.extension.id.mikoroku","resources":{"apkUrl":"https://raw.githubusercontent.com/Albar19/Extensions-komik/refs/heads/repo/apk/MikoRoku.apk","iconUrl":"https://raw.githubusercontent.com/Albar19/Extensions-komik/refs/heads/repo/icon/eu.kanade.tachiyomi.extension.id.mikoroku.png"},"extensionLib":"1.4","versionCode":7,"versionName":"1.4.07","contentWarning":3,"sources":[{"lang":"id","name":"MikoRoku","baseUrl":"https://mikoroku.com"}]}]}
+          [{"name":"MikoRoku","pkg":"eu.kanade.tachiyomi.extension.id.mikoroku","apk":"MikoRoku.apk","lang":"id","code":7,"version":"1.4.07","nsfw":3,"sources":[{"name":"MikoRoku","lang":"id","id":"8593493873810750465","baseUrl":"https://mikoroku.com"}]}]
           EOF
 
       - name: Deploy to repo branch
