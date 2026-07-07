@@ -9,15 +9,22 @@ Ekstensi tersedia untuk [Mihon](https://github.com/mihonapp/mihon),
 
 ## Cara Pakai
 
-### Build APK & Install
+### Pasang via Repo URL (Mihon)
 
-1. Clone repo ini
-2. Build APK:
+1. Buka Mihon → **Browse** → **Extension repos**
+2. Tap **+** lalu masukin URL:
+   ```
+   https://raw.githubusercontent.com/Albar19/Extensions-komik/repo/index.min.json
+   ```
+
+### Build APK Manual
+
+1. Clone repo ini, lalu:
    ```
    ./gradlew :src:id:mikoroku:assembleDebug
    ```
-3. APK hasil ada di `src/id/mikoroku/build/outputs/apk/debug/`
-4. Install file `.apk` langsung di HP, atau kirim lewat Google Drive/ShareIt
+2. APK hasil: `src/id/mikoroku/build/outputs/apk/debug/`
+3. Install file `.apk` langsung di HP
 
 ## License
 
