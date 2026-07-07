@@ -16,6 +16,8 @@ Ekstensi tersedia untuk [Mihon](https://github.com/mihonapp/mihon),
    ```
    https://raw.githubusercontent.com/Albar19/Extensions-komik/repo/index.min.json
    ```
+   
+   > **Catatan:** Setiap push, GitHub Actions bakal build otomatis. Tunggu sampai workflow selesai (cek di tab Actions) sebelum repo URL bisa dipake.
 
 
 
