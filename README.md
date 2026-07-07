@@ -9,31 +9,15 @@ Ekstensi tersedia untuk [Mihon](https://github.com/mihonapp/mihon),
 
 ## Cara Pakai
 
-### Build APK (Android Studio)
+### Build APK & Install
 
 1. Clone repo ini
-2. Buka project di **Android Studio**
-3. Tunggu Gradle sync selesai
-4. Di terminal jalankan:
+2. Build APK:
    ```
    ./gradlew :src:id:mikoroku:assembleDebug
    ```
-5. APK hasil build ada di:
-   ```
-   src/id/mikoroku/build/outputs/apk/debug/
-   ```
-
-### Install di Mihon/Tachiyomi
-
-1. Buka Mihon → **Browse** → **Extensions**
-2. Tap ikon **+** (atau menu titik tiga → **Extension repos**)
-3. Tambah URL repo ini:
-   ```
-   https://raw.githubusercontent.com/Albar19/Extensions-komik/repo/index.min.json
-   ```
-   *(belum tersedia — build & deploy manual dulu lewat APK)*
-
-Atau langsung install file `.apk` dari hasil build di atas.
+3. APK hasil ada di `src/id/mikoroku/build/outputs/apk/debug/`
+4. Install file `.apk` langsung di HP, atau kirim lewat Google Drive/ShareIt
 
 ## License
 
