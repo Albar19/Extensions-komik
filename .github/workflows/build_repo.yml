@@ -5,8 +5,9 @@ on:
     branches:
       - master
     paths:
-      - 'src/id/mikoroku/**'
+      - 'src/id/**'
       - '.github/workflows/build_repo.yml'
+      - '.github/scripts/generate-repo.py'
   workflow_dispatch:
 
 jobs:
@@ -27,19 +28,38 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Build extension
-        run: ./gradlew :src:id:mikoroku:assembleDebug
-
-      - name: Prepare repo files
+      - name: Build extensions
         run: |
-          mkdir -p repo/apk
-          cp src/id/mikoroku/build/outputs/apk/debug/*.apk repo/apk/MikoRoku.apk
-          cat > repo/index.min.json << 'EOF'
-          [{"name":"MikoRoku","pkg":"eu.kanade.tachiyomi.extension.id.mikoroku","apk":"MikoRoku.apk","lang":"id","code":7,"version":"1.4.07","nsfw":3,"sources":[{"name":"MikoRoku","lang":"id","id":"8593493873810750465","baseUrl":"https://mikoroku.com"}]}]
-          EOF
-          cat > repo/repo.json << 'EOF'
-          {"meta":{"name":"Albar19","shortName":"Albar19","website":"https://github.com/Albar19/Extensions-komik"}}
-          EOF
+          ./gradlew \
+            :src:id:bacakomik:assembleDebug \
+            :src:id:doujindesu:assembleDebug \
+            :src:id:hentaicrot:assembleDebug \
+            :src:id:hwago:assembleDebug \
+            :src:id:kiryuu:assembleDebug \
+            :src:id:klikmanga:assembleDebug \
+            :src:id:komikav:assembleDebug \
+            :src:id:komikcast:assembleDebug \
+            :src:id:komikdewasa:assembleDebug \
+            :src:id:komikindoco:assembleDebug \
+            :src:id:komikindoid:assembleDebug \
+            :src:id:komikindo:assembleDebug \
+            :src:id:komiknesia:assembleDebug \
+            :src:id:komikstation:assembleDebug \
+            :src:id:komiktap:assembleDebug \
+            :src:id:komiku:assembleDebug \
+            :src:id:komikzoid:assembleDebug \
+            :src:id:kumapoi:assembleDebug \
+            :src:id:mangacan:assembleDebug \
+            :src:id:mangasusu:assembleDebug \
+            :src:id:mangatale:assembleDebug \
+            :src:id:mikoroku:assembleDebug \
+            :src:id:shinigami:assembleDebug \
+            :src:id:tooncubus:assembleDebug \
+            :src:id:westmanga:assembleDebug \
+            --parallel
+
+      - name: Generate repo index
+        run: python .github/scripts/generate-repo.py
 
       - name: Deploy to repo branch
         uses: peaceiris/actions-gh-pages@v4
