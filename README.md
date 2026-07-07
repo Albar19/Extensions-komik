@@ -7,6 +7,34 @@ Repository ini berisi perbaikan untuk ekstensi sumber manga/scrap bahasa Indones
 Ekstensi tersedia untuk [Mihon](https://github.com/mihonapp/mihon),
 [Tachiyomi](https://github.com/tachiyomiorg/tachiyomi), dan fork lainnya.
 
+## Cara Pakai
+
+### Build APK (Android Studio)
+
+1. Clone repo ini
+2. Buka project di **Android Studio**
+3. Tunggu Gradle sync selesai
+4. Di terminal jalankan:
+   ```
+   ./gradlew :src:id:mikoroku:assembleDebug
+   ```
+5. APK hasil build ada di:
+   ```
+   src/id/mikoroku/build/outputs/apk/debug/
+   ```
+
+### Install di Mihon/Tachiyomi
+
+1. Buka Mihon → **Browse** → **Extensions**
+2. Tap ikon **+** (atau menu titik tiga → **Extension repos**)
+3. Tambah URL repo ini:
+   ```
+   https://raw.githubusercontent.com/Albar19/Extensions-komik/repo/index.min.json
+   ```
+   *(belum tersedia — build & deploy manual dulu lewat APK)*
+
+Atau langsung install file `.apk` dari hasil build di atas.
+
 ## License
 
     Copyright 2015 Javier Tomás
